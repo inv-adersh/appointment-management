@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package provider;
+
+service ProviderService {
+
+    rpc GetProvider (ProviderRequest)
+        returns (ProviderResponse);
+
+    rpc ListProviders (ListProvidersRequest)
+        returns (ListProvidersResponse);
+
+    rpc CheckProviderAvailability (AvailabilityRequest)
+        returns (AvailabilityResponse);
+}
+
+message ProviderRequest {
+    int32 provider_id = 1;
+}
+
+message ProviderResponse {
+    int32 id = 1;
+    string name = 2;
+    string specialization = 3;
+    bool is_active = 4;
+    bool is_available = 5;
+}
+
+message ListProvidersRequest {
+}
+
+message ListProvidersResponse {
+    repeated ProviderResponse providers = 1;
+}
+
+message AvailabilityRequest {
+    int32 provider_id = 1;
+}
+
+message AvailabilityResponse {
+    bool is_available = 1;
+}

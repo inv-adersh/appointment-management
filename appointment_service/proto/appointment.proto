@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package appointment;
+
+service AppointmentService {
+
+    rpc CreateAppointment(CreateAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc GetAppointment(GetAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc ListAppointments(ListAppointmentsRequest)
+        returns (ListAppointmentsResponse);
+
+    rpc AssignProvider(AssignProviderRequest)
+        returns (AppointmentResponse);
+
+    rpc AcceptAppointment(UpdateAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc RejectAppointment(UpdateAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc StartAppointment(UpdateAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc CompleteAppointment(UpdateAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc CancelAppointment(UpdateAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc RescheduleAppointment(RescheduleAppointmentRequest)
+        returns (AppointmentResponse);
+
+    rpc UpdateAppointment(UpdateAppointmentDetailsRequest)
+        returns (AppointmentResponse);
+
+    rpc UpdateAppointmentStatus(UpdateAppointmentStatusRequest)
+        returns (AppointmentResponse);
+}
+
+
+message CreateAppointmentRequest {
+    int32 customer_id = 1;
+    string title = 2;
+    string description = 3;
+    string scheduled_at = 4;
+    int32 duration_minutes = 5;
+}
+
+
+message GetAppointmentRequest {
+    int32 appointment_id = 1;
+}
+
+
+message ListAppointmentsRequest {
+    int32 customer_id = 1;
+    string status = 2;
+    string start_date = 3;
+    string end_date = 4;
+}
+
+
+message AssignProviderRequest {
+    int32 appointment_id = 1;
+    int32 provider_id = 2;
+    int32 assigned_by = 3;
+}
+
+
+message UpdateAppointmentRequest {
+    int32 appointment_id = 1;
+    int32 provider_id = 2;
+    int32 actor_id = 3;
+}
+
+
+message RescheduleAppointmentRequest {
+    int32 appointment_id = 1;
+    string scheduled_at = 2;
+    int32 actor_id = 3;
+}
+
+
+message AppointmentResponse {
+    int32 id = 1;
+    int32 customer_id = 2;
+    int32 provider_id = 3;
+    string title = 4;
+    string description = 5;
+    string scheduled_at = 6;
+    int32 duration_minutes = 7;
+    string status = 8;
+}
+
+message UpdateAppointmentDetailsRequest {
+    int32 appointment_id = 1;
+    string title = 2;
+    string description = 3;
+    int32 duration_minutes = 4;
+    int32 actor_id = 5;
+}
+
+message UpdateAppointmentStatusRequest {
+    int32 appointment_id = 1;
+    string new_status = 2;
+    int32 actor_id = 3;
+    string actor_role = 4;
+}
+
+message ListAppointmentsResponse {
+    repeated AppointmentResponse appointments = 1;
+}
